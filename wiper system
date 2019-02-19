@@ -1,0 +1,50 @@
+void setup() {
+  pinMode(2, INPUT);
+  pinMode(3, INPUT);
+  pinMode(A0, INPUT);
+  pinMode(12, OUTPUT);
+  pinMode(13, OUTPUT);
+  pinMode(9, OUTPUT);
+  Serial.begin(9600);
+}
+void loop()
+{
+ 
+  int switch1state=digitalRead(3);//reading status of ignition switch
+  int switch2state=digitalRead(2);//reading status of wiper switch
+  int pot=analogRead(A0);//reading potentiometer values
+  if(switch1state==HIGH)
+  {
+    digitalWrite(12,HIGH);
+    if(switch2state==HIGH)
+    {
+  
+    
+      digitalWrite(13,HIGH);
+      if((pot<64))
+     analogWrite(9,0);//0 dutycycle for pot reading till 64
+     if((pot>=64) && (pot<128))
+       analogWrite(9,64);//64 dutycycle for pot reading till 128
+       if((pot>=128) && (pot<192))
+       analogWrite(9,128);//128 dutycycle for pot reading till 192
+      if((pot>=192))
+       analogWrite(9,255);//255 dutycycle for pot reading greater or equal to 192
+
+    }
+    else
+    {
+      digitalWrite(9,LOW);
+    
+     digitalWrite(13,LOW);}
+  }
+  else
+  {digitalWrite(12,LOW);
+    digitalWrite(13,LOW);
+  }
+}
+       
+        
+      
+      
+      
+      
